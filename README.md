@@ -1,44 +1,60 @@
 # Bioinformatic Genomic Analysis Project 
 Analysis of Purinergic Pathway Overload Due to the Use of Cannabidiol in the Treatment of SARS-CoV-2\
-O artigo escolhido está dísponível nesse repositório com o nome ***Cannabidiol inhibits SARS-CoV-2 replication through***\
-Os softwares utilizados foram:
+The chosen article is available in this repository under the name ***Cannabidiol inhibits SARS-CoV-2 replication through***\
+The software used were:
 - [Galaxy](https://usegalaxy.org)
 - [DAVID](https://ngdc.cncb.ac.cn/databasecommons/database/id/3061)
 - [KEGG](https://www.genome.jp/kegg/)
 
   
 ## Overview
-A SARS-CoV-2 é responsável pela COVID-19, com uma gama de sintomas que vão desde leves até graves, destacando a necessidade de estudos sobre tratamentos alternativos devido à alta taxa de disseminação do vírus. Um estudo recente indica que o canabidiol (CBD) pode reduzir a ativação de citocinas, porém, o sistema purinérgico também desempenha um papel crucial na inflamação. Além disso, enzimas como a purina nucleosídeo fosforilase (PNP) e a AMP desaminase estão implicadas no metabolismo das purinas e podem ter influência significativa na resposta do organismo. A hipótese é que o tratamento com CBD pode sobrecarregar o sistema purinérgico, potencialmente mascarando os sintomas da SARS-CoV-2.
+SARS-CoV-2 is responsible for COVID-19, with a range of symptoms ranging from mild to severe, highlighting the need for studies on alternative treatments due to the high rate of virus transmission. A recent study suggests that cannabidiol (CBD) may reduce cytokine activation; however, the purinergic system also plays a crucial role in inflammation. Furthermore, enzymes such as purine nucleoside phosphorylase (PNP) and AMP deaminase are implicated in purine metabolism and may have a significant influence on the body's response. The hypothesis is that CBD treatment could overload the purinergic system, potentially masking symptoms of SARS-CoV-2.
 
-
-## Arquivos
-Para esse projeto, foram utilizados os arquivos: 
-- ***[Human.GRCh38.p13.annot.tsv.gz].gtf***, como o genoma humano para a base do trabalho
-- ***[GSE168797_Raw_gene_counts_matrix.txt.gz].tabular***, como a tabela de genes utilizados no artigo
-- ***[GSE168797_cortados].tabular***, como a tabela de genes selecionados e pronta para a análise.
+## Files
+For this project, the files used were: 
+- ***[Human.GRCh38.p13.annot.tsv.gz].gtf***, to use the human genome as the basis for the project
+- ***[GSE168797_Raw_gene_counts_matrix.txt.gz].tabular***, how the table of genes used in the article
+- ***[GSE168797_cortados].tabular***, how the table of selected genes is prepared for analysis
 
   
-## Metodologia
-O sequenciamento de RNA de alto rendimento foi conduzido na plataforma Illumina NovaSeq 6000, com leitura emparelhadas de 100 bases (paired end), utilizando uma biblioteca de cDNA e fonte de biblioteca transcriptômica. As leituras passaram por processamento para garantir qualidade e remoção de adaptadores. Posteriormente, foram mapeadas para os genomas humano (versão hg19) e SARS-CoV-2.\
-Para análise da expressão gênica diferencial de **RNA-Seq**, foram adicionadas tags aos dados para identificar tratamentos e sequenciamentos, essenciais para análises com **DESeq2**, que retorna estatísticas relevantes, como a tabela de DEGs contendo as informações como log2-fold change (medida da diferença na expressão gênica entre duas condições em uma escala logarítmica) e p-ajustado (correção do valor-p para controlar os falsos positivos na análise de expressão gênica) para cada Ensembl ID. Posteriormente, os dados de anotação gênica do genoma humano foram adicionados à tabela. Os genes mais expressos diferencialmente entre os tratamentos foram selecionados com **p-valor < 0,05 e abs(log2FC)>1**. Com base nos **Z-scores**, que expressam o desvio dos dados em relação à média da amostra em termos do desvio padrão, **Volcano Plot e Heatmaps** foram gerados para melhor visualização.
-Na etapa de enriquecimento funcional, utilizou-se como input na plataforma **DAVID** apenas os genes diferencialmente expressos positivamente. Isso permitiu uma compreensão mais detalhada das funções biológicas e processos, utilizando a ontologia de genes para categorizá-los e o banco de dados **KEGG** para explorar as vias metabólicas associadas.
+## Methodology
+High-throughput RNA sequencing was conducted on the Illumina NovaSeq 6000 platform, with paired-end reads of 100 bases, using a cDNA library and transcriptomic library source. The reads underwent processing to ensure quality and adapter removal. Subsequently, they were mapped to the human genome (hg19 version) and SARS-CoV-2.
+
+For differential gene expression analysis from RNA-Seq data, tags were added to identify treatments and sequencing, crucial for analysis with DESeq2. DESeq2 returns relevant statistics such as the table of Differentially Expressed Genes (DEGs), including information like log2-fold change (a measure of gene expression difference between two conditions on a logarithmic scale) and adjusted p-value (correction of p-value to control false positives in gene expression analysis) for each Ensembl ID. Annotation data from the human genome were then added to the table. Genes significantly differentially expressed between treatments were selected based on criteria of p-value < 0.05 and abs(log2FC) > 1.
+
+Volcano plots and heatmaps were generated based on Z-scores, which express data deviation from the sample mean in terms of standard deviation, for better visualization.
+
+In the functional enrichment step, only positively differentially expressed genes were input into the DAVID platform. This approach enabled a detailed understanding of biological functions and processes, utilizing gene ontology for categorization and the KEGG database to explore associated metabolic pathways.
 
 
-## Resultados
-- O PCA plot revela a variabilidade entre os grupos de tratamento (canabidiol ou veículo), mostrando que eles se agrupam de acordo com o tipo de tratamento. A distância entre os grupos indica que o tratamento tem um impacto significativo nas amostras.\
- ![PCA PLOT_page-0001](https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/c9291b5e-22ff-4229-9291-d5b5a0bd729b)
-- O gráfico de dispersão calcula um valor final que representa a variabilidade dos genes estudados com base nos dados brutos, mostrado em azul. A maioria dos genes, representados pelos pontos pretos, está próxima ao valor final, indicando uma variação consistente e previsível, o que sugere qualidade nos dados.\
-  ![DISPERSÃO_page-0001](https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/e19fd9bb-6b94-4e49-8bb8-00ec6102acaa)
-- No histograma de frequência, a concentração maior de valores de p-value igual a zero indica que há diferenças significativas nas expressões gênicas avaliadas entre as amostras tratadas com canabidiol e as tratadas com veículo.\
-  ![FREQUENCIA_page-0001](https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/f092a8df-1bb2-4557-84fe-9894f91271d2)
-- O gráfico de MA-plot indica diferenças na expressão gênica entre os grupos de amostras, destacando genes com expressão aumentada (pontos acima do eixo x) ou reduzida (pontos abaixo do eixo x). Isso levanta questões sobre quais genes poderiam estar mais expressos, considerando a redução significativa de citocinas indicada no artigo durante a resposta imune inflamatória.\
-  ![MA_page-0001](https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/9418c34d-a1f1-4ecc-b945-fb4ca3adfff7)
-- No Volcano plot, são destacados os genes que ultrapassaram os limites de FDR e log FoldChange, mostrando aqueles regulados positivamente (em vermelho) e negativamente (em azul). Genes "Up" estão significativamente aumentados em expressão na condição de infecção com canabidiol em comparação com a infecção com veículo, enquanto "Down" estão diminuídos.\
-  ![VOLCANO_page-0001](https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/afc873c4-7d0c-42fc-a8bc-4d83e061a369)
-- Na análise do heatmap, as amostras são exibidas no eixo X, com um dendrograma destacando a similaridade entre seus perfis de expressão gênica. O eixo Y apresenta 1591 genes expressos positivamente, também acompanhados por um dendrograma que mostra a similaridade entre seus níveis de expressão. As amostras são organizadas no heatmap de acordo com o tipo de tratamento, sendo divididas em seis colunas que representam condições experimentais distintas, incluindo tratamentos com canabidiol e com veículo. Isso indica que há três replicatas por tratamento, organizadas em dois grupos principais no heatmap, cada um correspondente a uma condição experimental.\
-  ![mais positivo png_page-0001](https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/ec4991ff-9303-4265-a169-1c1b13fd91ed)
-  ![mais expresso_page-0001](https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/b543847f-01f9-418d-80fe-5cc3ed489b29)
+
+## Results
+- The PCA plot reveals the variability between treatment groups (cannabidiol or vehicle), showing that they cluster according to treatment type. The distance between the groups indicates that treatment has a significant impact on the samples.
+  
+  <img src="https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/c9291b5e-22ff-4229-9291-d5b5a0bd729b" width=600 height=200>
+
+- The scatter plot calculates a final value representing the variability of the studied genes based on raw data, shown in blue. Most genes, represented by black points, are close to the final value, indicating consistent and predictable variation, suggesting data quality.
+  
+  <img src="https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/e19fd9bb-6b94-4e49-8bb8-00ec6102acaa" width=400 height=400>
+  
+- In the frequency histogram, the higher concentration of p-values equal to zero indicates significant differences in gene expressions evaluated between samples treated with cannabidiol and those treated with the vehicle.
+  
+  <img src="https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/f092a8df-1bb2-4557-84fe-9894f91271d2" width=400 height=400>
+
+- The MA-plot indicates differences in gene expression between sample groups, highlighting genes with increased expression (points above the x-axis) or reduced expression (points below the x-axis). This raises questions about which genes might be more highly expressed, considering the significant reduction in cytokines indicated in the article during the inflammatory immune response.
+  
+  <img src="https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/9418c34d-a1f1-4ecc-b945-fb4ca3adfff7" width=400 height=400>
+  
+- In the Volcano plot, genes that surpass the thresholds of False Discovery Rate (FDR) and log FoldChange are highlighted, showing those positively regulated (in red) and negatively regulated (in blue). "Up" genes are significantly increased in expression under the condition of infection with cannabidiol compared to infection with the vehicle, while "Down" genes are decreased.
+  
+  <img src="https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/afc873c4-7d0c-42fc-a8bc-4d83e061a369" width=400 height=400>
+  
+- In the heatmap analysis, samples are displayed on the X-axis, with a dendrogram highlighting the similarity between their gene expression profiles. The Y-axis presents 1591 positively expressed genes, also accompanied by a dendrogram showing similarity between their expression levels. Samples are organized in the heatmap according to treatment type, divided into six columns representing distinct experimental conditions, including treatments with cannabidiol and vehicle. This indicates there are three replicates per treatment, organized into two main groups in the heatmap, each corresponding to an experimental condition.
+  
+  <img src="https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/ec4991ff-9303-4265-a169-1c1b13fd91ed" width=400 height=400>
+  
+  <img src="https://github.com/SynbioLuancesarca/Genomic-Analysis-Project/assets/168687335/b543847f-01f9-418d-80fe-5cc3ed489b29" width=400 height=400>
 
 
-## Conclusões
-A partir dessas informações, acredita-se que ao analisar apenas a expressão de citocinas como fonte de inflamação, o artigo acaba não considerando outras vias que também podem estar relacionadas. Nesse caso, a via purinérgica que está associada como fonte de resposta à eventos inflamatórios, apresenta superexpressão, o que pode indicar uma sobrecarga dessa via devido ao uso do canabidiol, que ao invés de servir como um componente anti-inflamatório, como proposto, pode estar apenas mascarando os efeito de uma via específica, relacionada às citocinas do sistema imune, desta forma, para manter a homeostase do organismo, há uma sobrecarga de outra via.
+## Conclusions
+Based on this information, it is believed that by analyzing only cytokine expression as a source of inflammation, the article may overlook other pathways that could also be involved. In this case, the purinergic pathway, which is associated with inflammatory responses, shows overexpression, indicating potential overload due to cannabidiol use. Instead of acting as an anti-inflammatory component as proposed, cannabidiol might be masking the effects of a specific pathway related to immune system cytokines. Consequently, to maintain organismal homeostasis, there could be an overload on another pathway.
